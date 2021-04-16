@@ -1,15 +1,19 @@
 import './../App.css';
+import map from './../images/pinsHomeMap.png';
 
 import React, { Component } from 'react';
 
 export default class Home extends Component {
   burgerTransform() {
-    var button = document.getElementById("bt1");
-    button.innerHTML = "ho";
+    var navActive = document.getElementById("menu");
+    
+    if (navActive.style.visibility == "hidden") {
+      navActive.style.visibility = "visible";
+    }
+    else {
+      navActive.style.visibility = "hidden";
+    }
 
-    document.getElementById("b1").classList.add("change");
-    document.getElementById("b2").classList.add("change");
-    document.getElementById("b3").classList.add("change");
   }
   render() {
     return (
@@ -17,31 +21,32 @@ export default class Home extends Component {
         <header className="App-header">
         </header>
         <div className="App-content">
-          <div class="burger" onClick={() => this.burgerTransform()}>
-            <div id="b1" class="bar1"></div>
-            <div id="b2" class="bar2"></div>
-            <div id="b3" class="bar3"></div>
+          <div id="burger" class="burger" onClick={() => this.burgerTransform()}>
+              <div id="b1" class="bar1"></div>
+              <div id="b2" class="bar2"></div>
+              <div id="b3" class="bar3"></div>
           </div>
-          <div class="columns">
-            <div class="column is-half">
-              <article class="media">
-                <div class="media-content">
-                  <div class="content">
-                      <button id="bt1" class="button is-white is-large is-fullwidth">Host Home</button>
-                  </div>
-                </div>
-              </article>
-            </div>
-            <div class="column is-half">
-              <article class="media">
-                <div class="media-content">
-                  <div class="content">
-                      <button class="button is-white is-large is-fullwidth">Host Home</button>
-                  </div>
-                </div>
-              </article>
-            </div>
+          <div id="menu" class="navBlock navActive">
+            <aside class="menu">
+              <p class="menu-label">
+                New
+              </p>
+              <ul class="menu-list">
+                <li><a>Location</a></li>
+                <li><a>Category</a></li>
+              </ul>
+              <p class="menu-label">
+                View
+              </p>
+              <ul class="menu-list">
+                <li><a>Categories</a></li>
+                <li><a>Locations</a></li>
+              </ul>
+            </aside>
           </div>
+          <figure class="image">
+            <img src={map} alt="Image" />
+          </figure>
         </div>
       </div>
     );

@@ -50,10 +50,10 @@ export default class Signin extends Component {
   render() {
     if (!this.state.isSignedIn) {
       return (
-        <div className="App">
+        <div className="AppSignIn">
           <header className="App-header">
           </header>
-          <div className="App-content">
+          <div className="App-content Min-content">
           <form class="box">
               <p class="title is-1 is-spaced">live locally</p>
               <p class="subtitle is-5">sign up to connect with a local at your destination</p>
@@ -64,17 +64,10 @@ export default class Signin extends Component {
       );
     }
     return (
-      <div className="App">
+      <div className="AppSignIn">
         <header className="App-header">
         </header>
-        <div className="App-content">
-          <div class="box">
-            <div class="content">
-              <p>Welcome!</p> 
-              <p>name: {firebase.auth().currentUser.displayName}</p>
-              <p>email id: {firebase.auth().currentUser.email}</p>
-            </div>
-          </div>
+        <div className="Min-content App-content">
           <div class="columns">
             <div class="column is-half">
               <div class="box">
@@ -84,7 +77,7 @@ export default class Signin extends Component {
                     </figure>
                   <div class="media-content">
                     <div class="content">
-                        <button class="button is-white is-large is-fullwidth" onClick={() => history.push('/host/home')}>Continue as Host</button>
+                        <button class="button is-white is-large is-fullwidth" onClick={() => history.push('/yourPins/home')}>Continue as Host</button>
                     </div>
                   </div>
                 </article>
@@ -98,7 +91,7 @@ export default class Signin extends Component {
                     </figure>
                   <div class="media-content">
                     <div class="content">
-                        <button class="button is-white is-large is-fullwidth" onClick={() => history.push('/guest/home')}>Continue as Guest</button>
+                        <button class="button is-white is-large is-fullwidth" onClick={() => history.push('/galleryPins/home')}>Continue as Guest</button>
                     </div>
                   </div>
                 </article>
