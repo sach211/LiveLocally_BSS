@@ -74,7 +74,7 @@ export default class viewCategories extends Component {
                     return (
                         <li>
                         <div>{categories.name}</div>
-                        <div>Followers: {categories.category}</div>
+                        <div>Followers: {categories.followers}</div>
                         </li>
                     )
                     })
