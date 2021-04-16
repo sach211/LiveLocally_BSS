@@ -1,9 +1,9 @@
 import './../App.css';
-import map from './../images/pinsHomeMap.png';
 import history from "./../history";
 import React, { Component } from 'react';
+import pinImg from './../images/pinImg.png';
 
-export default class Home extends Component {
+export default class viewCategories extends Component {
   burgerTransform() {
     var navActive = document.getElementById("menu");
     
@@ -13,8 +13,20 @@ export default class Home extends Component {
     else {
       navActive.style.visibility = "hidden";
     }
-
   }
+
+  state = {
+      categories: null
+  }
+
+  async componentDidMount() {
+    const response = await fetch('http://localhost:4000/dev/yourPins/categories')
+    const categories = await response.json()
+    // save it to your components state so you can use it during render
+    this.setState({categories: categories})
+    console.log(categories)
+  }
+
   render() {
     return (
       <div className="AppBg">
@@ -44,9 +56,32 @@ export default class Home extends Component {
               </ul>
             </aside>
           </div>
-          <figure class="image">
-            <img src={map} alt="Image" />
-          </figure>
+          <div class="card">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            <img src={pinImg} alt="Placeholder image"/>
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">Your Categories</p>
+                    </div>
+                </div>
+                <div class="content">
+                {
+                    this.state.categories && this.state.categories.map(categories => {
+                    return (
+                        <li>
+                        <div>{categories.name}</div>
+                        <div>Followers: {categories.category}</div>
+                        </li>
+                    )
+                    })
+                }
+                </div>
+            </div>
+          </div>
         </div>
       </div>
     );

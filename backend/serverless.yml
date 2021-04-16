@@ -78,6 +78,19 @@ functions:
       - http:
           path: /{proxy+}
           method: ANY
+  viewPins:
+    handler: handler.viewPins
+    events:
+      - http:
+          path: /dev/yourPins/pinsList
+          method: GET
+  viewCategories:
+    handler: handler.viewCategories
+    events:
+      - http:
+          path: /dev/yourPins/categories
+          method: GET
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
