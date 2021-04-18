@@ -1,4 +1,5 @@
 'use strict';
+const firebaseTokenVerifier = require('firebase-token-verifier')
 
 module.exports.hello = async (event) => {
   if (event.path === '/whoami' && event.httpMethod === 'GET') {
@@ -54,7 +55,7 @@ module.exports.viewPins = async (event) => {
 };
 
 module.exports.viewCategories = async (event) => {
-  if (event.path === '/dev/yourPins/categories' && event.httpMethod === 'GET') {
+  if (event.path === '/yourPins/categories' && event.httpMethod === 'GET') {
     const token = event.headers['Authorization']
     if (!token) {
       return {
@@ -78,4 +79,3 @@ module.exports.viewCategories = async (event) => {
     }
   }
 };
-
