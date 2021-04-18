@@ -7,11 +7,11 @@ export default class viewPins extends Component {
   burgerTransform() {
     var navActive = document.getElementById("menu");
     
-    if (navActive.style.visibility == "hidden") {
-      navActive.style.visibility = "visible";
+    if (navActive.style.visibility == "visible") {
+      navActive.style.visibility = "hidden";
     }
     else {
-      navActive.style.visibility = "hidden";
+      navActive.style.visibility = "visible";
     }
   }
 
@@ -51,8 +51,8 @@ export default class viewPins extends Component {
                 View
               </p>
               <ul class="menu-list">
-                <li><a onClick={() => history.push('/yourPins/categories')}>Categories</a></li>
                 <li><a onClick={() => history.push('/yourPins/pinsList')}>Locations</a></li>
+                <li><a onClick={() => history.push('/yourPins/categories')}>Categories</a></li>
               </ul>
             </aside>
           </div>
