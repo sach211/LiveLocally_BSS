@@ -2,7 +2,9 @@
   "name": "llserverless",
   "description": "",
   "version": "0.1.0",
-  "dependencies": {},
+  "dependencies": {
+    "firebase-token-verifier": "^0.1.0"
+  },
   "devDependencies": {
     "serverless": "^2.30.3",
     "serverless-dynamodb-local": "^0.2.39",
