@@ -27,16 +27,55 @@ module.exports.hello = async (event) => {
 };
 
 module.exports.viewPins = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify([{name: 'Cloister Cafe', category: 'gr8 cocktails', likes: 10,}, {name: 'Ginger and Lemongrass',category: 'restaurants',likes: 2,},{name: 'Mao\'s Bao', category: 'restaurants',likes: 23,}])
+  if (event.path === '/dev/yourPins/pinsList' && event.httpMethod === 'GET') {
+    const token = event.headers['Authorization']
+    if (!token) {
+      return {
+        statusCode: 401
+      }
+    }
+
+    try {
+      // validate the token from the request
+      const decoded = await firebaseTokenVerifier.validate(token, projectId)
+    } catch (err) {
+      // the token was invalid,
+      console.error(err)
+      return {
+        statusCode: 401
+      }
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify([{name: 'Cloister Cafe', category: 'gr8 cocktails', likes: 10,}, {name: 'Ginger and Lemongrass',category: 'restaurants',likes: 2,},{name: 'Mao\'s Bao', category: 'restaurants',likes: 23,}])
+    }
   }
 };
 
 module.exports.viewCategories = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify([{name: 'gr8 cocktails', followers: 3,}, {name: 'restaurants',followers: 12,}])
+  if (event.path === '/dev/yourPins/categories' && event.httpMethod === 'GET') {
+    const token = event.headers['Authorization']
+    if (!token) {
+      return {
+        statusCode: 401
+      }
+    }
+
+    try {
+      // validate the token from the request
+      const decoded = await firebaseTokenVerifier.validate(token, projectId)
+    } catch (err) {
+      // the token was invalid,
+      console.error(err)
+      return {
+        statusCode: 401
+      }
+    }
+    return {
+      statusCode: 200,
+      body: JSON.stringify([{name: 'gr8 cocktails', followers: 3,}, {name: 'restaurants',followers: 12,}])
+    }
   }
 };
 

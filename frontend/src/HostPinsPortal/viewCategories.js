@@ -2,6 +2,7 @@ import './../App.css';
 import history from "./../history";
 import React, { Component } from 'react';
 import pinImg from './../images/pinImg.png';
+import firebase from 'firebase';
 
 export default class viewCategories extends Component {
   burgerTransform() {
@@ -20,7 +21,17 @@ export default class viewCategories extends Component {
   }
 
   async componentDidMount() {
-    const response = await fetch('http://localhost:4000/dev/yourPins/categories')
+    const idToken = await firebase.auth().currentUser?.getIdToken()
+    const response = await fetch('http://localhost:4000/dev/yourPins/categories', {
+      headers: {
+        'Authorization': idToken
+      }
+    })
+
+    if (response.status === 401) {
+      return console.log('unauthorized')
+    }
+    
     const categories = await response.json()
     // save it to your components state so you can use it during render
     this.setState({categories: categories})
