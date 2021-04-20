@@ -82,13 +82,13 @@ functions:
     handler: handler.viewPins
     events:
       - http:
-          path: /dev/yourPins/pinsList
+          path: /yourPins/pinsList
           method: GET
   viewCategories:
     handler: handler.viewCategories
     events:
       - http:
-          path: /dev/yourPins/categories
+          path: /yourPins/categories
           method: GET
 
 

@@ -27,7 +27,9 @@ module.exports.hello = async (event) => {
 };
 
 module.exports.viewPins = async (event) => {
-  if (event.path === '/dev/yourPins/pinsList' && event.httpMethod === 'GET') {
+  const firebaseTokenVerifier = require('firebase-token-verifier')
+  const projectId = "ll-auth-61b58"
+  if (event.path === '/yourPins/pinsList' && event.httpMethod === 'GET') {
     const token = event.headers['Authorization']
     if (!token) {
       return {
@@ -54,7 +56,9 @@ module.exports.viewPins = async (event) => {
 };
 
 module.exports.viewCategories = async (event) => {
-  if (event.path === '/dev/yourPins/categories' && event.httpMethod === 'GET') {
+  const firebaseTokenVerifier = require('firebase-token-verifier')
+  const projectId = "ll-auth-61b58"
+  if (event.path === '/yourPins/categories' && event.httpMethod === 'GET') {
     const token = event.headers['Authorization']
     if (!token) {
       return {
