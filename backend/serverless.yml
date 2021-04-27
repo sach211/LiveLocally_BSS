@@ -84,12 +84,14 @@ functions:
       - http:
           path: /yourPins/pinsList
           method: GET
+          cors: true
   viewCategories:
     handler: handler.viewCategories
     events:
       - http:
           path: /yourPins/categories
           method: GET
+          cors: true
 
 
 #    The following are a few example events you can configure

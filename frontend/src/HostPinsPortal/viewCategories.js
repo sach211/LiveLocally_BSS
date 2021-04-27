@@ -21,8 +21,14 @@ export default class viewCategories extends Component {
   }
 
   async componentDidMount() {
+    let backendUrl = "https://45qc94uz85.execute-api.us-east-1.amazonaws.com/dev/"
+
+    if (window.location.href.includes('localhost')) {
+      backendUrl = "http://localhost:4000/dev/"
+    }
+
     const idToken = await firebase.auth().currentUser?.getIdToken()
-    const response = await fetch('http://localhost:4000/dev/yourPins/categories', {
+    const response = await fetch(backendUrl + "yourPins/categories", {
       headers: {
         'Authorization': idToken
       }
