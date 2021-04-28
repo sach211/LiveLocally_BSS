@@ -17,6 +17,14 @@ export default class addCategory extends Component {
 
   }
 
+  generateId() {
+    const time = Date.now();
+    const randNum = Math.floor(Math.random() * 100);
+
+    let newId = time + '_' + randNum;
+    return newId;
+}
+
   async newCategory(){
     let backendUrl = "https://45qc94uz85.execute-api.us-east-1.amazonaws.com/dev/"
 
@@ -34,7 +42,7 @@ export default class addCategory extends Component {
             'Authorization': idToken
         },
         body: JSON.stringify({
-            category_id: 4,
+            category_id: this.generateId(),
             uu_id: firebase.auth().currentUser.email,
             category_name: categoryName
         })

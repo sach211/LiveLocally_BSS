@@ -186,10 +186,10 @@ const checkUser = async (event) => {
 
 function getLocations (uuid) {
   console.log("get Locations")
-  return docClient.scan(
+  return docClient.query(
     {
-      TableName: "llBSS_pins",
-      FilterExpression: "uu_id = :uuid",
+      TableName: "ll_bss_locations",
+      KeyConditionExpression: "uu_id = :uuid",
       ExpressionAttributeValues: {":uuid": uuid},
     }
   ).promise().then((response) => response.Items);
@@ -197,10 +197,10 @@ function getLocations (uuid) {
 
 function getCategories (uuid) {
   console.log("get Categories")
-  return docClient.scan(
+  return docClient.query(
     {
-      TableName: "llBSS_categories",
-      FilterExpression: "uu_id = :uuid",
+      TableName: "ll_bss_categories",
+      KeyConditionExpression: "uu_id = :uuid",
       ExpressionAttributeValues: {":uuid": uuid},
     }
   ).promise().then((response) => response.Items);
@@ -210,7 +210,7 @@ function addPin(loc_id, uu_id, category_name, loc_name) {
   console.log("Adding pin")
   return docClient.put(
     {
-      TableName: "llBSS_pins",
+      TableName: "ll_bss_locations",
       Item: {
         loc_id: loc_id,
         uu_id: uu_id,
@@ -226,7 +226,7 @@ function addCategory(category_id, uu_id, category_name) {
   console.log("Adding category")
   return docClient.put(
     {
-      TableName: "llBSS_categories",
+      TableName: "ll_bss_categories",
       Item: {
         category_id: category_id,
         uu_id: uu_id,

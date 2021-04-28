@@ -16,6 +16,14 @@ export default class addPin extends Component {
     }
   }
 
+  generateId() {
+      const time = Date.now();
+      const randNum = Math.floor(Math.random() * 100);
+
+      let newId = time + '_' + randNum;
+      return newId;
+  }
+
   async newLocation(){
     let backendUrl = "https://45qc94uz85.execute-api.us-east-1.amazonaws.com/dev/"
 
@@ -34,7 +42,7 @@ export default class addPin extends Component {
             'Authorization': idToken
         },
         body: JSON.stringify({
-            loc_id: 5,
+            loc_id: this.generateId(),
             uu_id: firebase.auth().currentUser.email,
             category_name: categoryName,
             loc_name: locName
