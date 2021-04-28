@@ -30,7 +30,8 @@ export default class viewPins extends Component {
     const idToken = await firebase.auth().currentUser?.getIdToken()
     const response = await fetch(backendUrl + 'yourPins/pinsList', {
       headers: {
-        'Authorization': idToken
+        'Authorization': idToken,
+        'uuid': firebase.auth().currentUser.email
       }
     })
 
