@@ -67,7 +67,7 @@ module.exports.viewPins = async (event) => {
       }
     }
 
-    const locations = await getLocations("sva22@cornell.edu")
+    const locations = await getLocations("sachiangle@gmail.com")
     return {
       statusCode: 200,
       headers,
@@ -136,7 +136,7 @@ module.exports.viewCategories = async (event) => {
       }
     }
     
-    const categories = await getCategories("sva22@cornell.edu")
+    const categories = await getCategories("sachiangle@gmail.com")
     return {
       statusCode: 200,
       headers,

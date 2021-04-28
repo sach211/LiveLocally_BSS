@@ -34,7 +34,7 @@ export default class addPin extends Component {
             'Authorization': idToken
         },
         body: JSON.stringify({
-            loc_id: 4,
+            loc_id: 5,
             uu_id: firebase.auth().currentUser.email,
             category_name: categoryName,
             loc_name: locName

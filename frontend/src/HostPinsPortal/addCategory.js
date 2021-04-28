@@ -34,7 +34,7 @@ export default class addCategory extends Component {
             'Authorization': idToken
         },
         body: JSON.stringify({
-            category_id: 3,
+            category_id: 4,
             uu_id: firebase.auth().currentUser.email,
             category_name: categoryName
         })
