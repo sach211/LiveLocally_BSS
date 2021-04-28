@@ -89,8 +89,8 @@ export default class viewPins extends Component {
                     this.state.pins && this.state.pins.map(pins => {
                     return (
                         <li>
-                        <div>{pins.name}</div>
-                        <div>Category: {pins.category}</div>
+                        <div>{pins.loc_name}</div>
+                        <div>Category: {pins.category_name}</div>
                         <div>Likes: {pins.likes}</div>
                         </li>
                     )

@@ -90,7 +90,7 @@ export default class viewCategories extends Component {
                     this.state.categories && this.state.categories.map(categories => {
                     return (
                         <li>
-                        <div>{categories.name}</div>
+                        <div>{categories.category_name}</div>
                         <div>Followers: {categories.followers}</div>
                         </li>
                     )

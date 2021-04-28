@@ -1,5 +1,12 @@
 'use strict';
 
+const AWS = require("aws-sdk");
+const { v4: uuidv4 } = require("uuid");
+const docClient = new AWS.DynamoDB.DocumentClient({ region: "us-east-1" });
+
+const firebaseTokenVerifier = require('firebase-token-verifier')
+const projectId = "ll-auth-61b58"
+
 const headers = {
   'Access-Control-Allow-Origin': '*'
 }
@@ -39,8 +46,6 @@ module.exports.viewPins = async (event) => {
     }
   }
 
-  const firebaseTokenVerifier = require('firebase-token-verifier')
-  const projectId = "ll-auth-61b58"
   if (event.path === '/yourPins/pinsList' && event.httpMethod === 'GET') {
     const token = event.headers['Authorization']
     if (!token) {
@@ -62,10 +67,40 @@ module.exports.viewPins = async (event) => {
       }
     }
 
+    const locations = await getLocations(1)
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify([{name: 'Cloister Cafe', category: 'gr8 cocktails', likes: 10,}, {name: 'Ginger and Lemongrass',category: 'restaurants',likes: 2,},{name: 'Mao\'s Bao', category: 'restaurants',likes: 23,}])
+      body: JSON.stringify(locations)
+    }
+  }
+
+  if (event.path === '/yourPins/addPin' && event.httpMethod === 'POST') {
+    let user;
+    try {
+      user = await checkUser(event)
+    } catch (err) {
+      return {
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({message: err.message})
+      }
+    }
+
+    if (!event.body) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({message: 'Missing body'})
+      }
+    }
+
+    const pinContent = JSON.parse(event.body);
+    const data = await addPin(pinContent.loc_id, pinContent.uu_id, pinContent.category_name, pinContent.loc_name)
+
+    return {
+      statusCode: 201,
+        headers
     }
   }
 };
@@ -80,8 +115,6 @@ module.exports.viewCategories = async (event) => {
     }
   }
 
-  const firebaseTokenVerifier = require('firebase-token-verifier')
-  const projectId = "ll-auth-61b58"
   if (event.path === '/yourPins/categories' && event.httpMethod === 'GET') {
     const token = event.headers['Authorization']
     if (!token) {
@@ -102,11 +135,104 @@ module.exports.viewCategories = async (event) => {
         statusCode: 401
       }
     }
+    
+    const categories = await getCategories(1)
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify([{name: 'gr8 cocktails', followers: 3,}, {name: 'restaurants',followers: 12,}])
+      body: JSON.stringify(categories)
     }
   }
+
+  if (event.path === '/yourPins/addCategory' && event.httpMethod === 'POST') {
+    let user;
+    try {
+      user = await checkUser(event)
+    } catch (err) {
+      return {
+        statusCode: 401,
+        headers,
+        body: JSON.stringify({message: err.message})
+      }
+    }
+
+    if (!event.body) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({message: 'Missing body'})
+      }
+    }
+
+    const categoryContent = JSON.parse(event.body);
+    const data = await addCategory(categoryContent.category_id, categoryContent.uu_id, categoryContent.category_name)
+
+    return {
+      statusCode: 201,
+        headers
+    }
+  }
+
 };
 
+const checkUser = async (event) => {
+  const token = event.headers['Authorization']
+    if (!token) {
+      throw new Error('Missing token')
+    }
+    const decodedUser = await firebaseTokenVerifier.validate(token, projectId)
+    return decodedUser
+}
+
+function getLocations (uuid) {
+  console.log("get Locations")
+  return docClient.scan(
+    {
+      TableName: "llBSS_locations",
+      FilterExpression: "uu_id = :uuid",
+      ExpressionAttributeValues: {":uuid": uuid},
+    }
+  ).promise().then((response) => response.Items);
+}
+
+function getCategories (uuid) {
+  console.log("get Categories")
+  return docClient.scan(
+    {
+      TableName: "llBSS_categories",
+      FilterExpression: "uu_id = :uuid",
+      ExpressionAttributeValues: {":uuid": uuid},
+    }
+  ).promise().then((response) => response.Items);
+}
+
+function addPin(loc_id, uu_id, category_name, loc_name) {
+  console.log("Adding pin")
+  return docClient.put(
+    {
+      TableName: "llBSS_locations",
+      Item: {
+        loc_id: loc_id,
+        uu_id: uu_id,
+        category_name: category_name,
+        likes: 0,
+        loc_name: loc_name
+      },
+    }
+  ).promise();
+};
+
+function addCategory(category_id, uu_id, category_name) {
+  console.log("Adding category")
+  return docClient.put(
+    {
+      TableName: "llBSS_categories",
+      Item: {
+        category_id: category_id,
+        uu_id: uu_id,
+        category_name: category_name,
+        followers: 0
+      },
+    }
+  ).promise();
+};
