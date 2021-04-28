@@ -67,7 +67,7 @@ module.exports.viewPins = async (event) => {
       }
     }
 
-    const locations = await getLocations(1)
+    const locations = await getLocations("sva22@cornell.edu")
     return {
       statusCode: 200,
       headers,
@@ -136,7 +136,7 @@ module.exports.viewCategories = async (event) => {
       }
     }
     
-    const categories = await getCategories(1)
+    const categories = await getCategories("sva22@cornell.edu")
     return {
       statusCode: 200,
       headers,
@@ -188,7 +188,7 @@ function getLocations (uuid) {
   console.log("get Locations")
   return docClient.scan(
     {
-      TableName: "llBSS_locations",
+      TableName: "llBSS_pins",
       FilterExpression: "uu_id = :uuid",
       ExpressionAttributeValues: {":uuid": uuid},
     }
@@ -210,7 +210,7 @@ function addPin(loc_id, uu_id, category_name, loc_name) {
   console.log("Adding pin")
   return docClient.put(
     {
-      TableName: "llBSS_locations",
+      TableName: "llBSS_pins",
       Item: {
         loc_id: loc_id,
         uu_id: uu_id,

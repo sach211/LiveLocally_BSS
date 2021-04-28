@@ -37,7 +37,7 @@ provider:
           - dynamodb:UpdateItem
           - dynamodb:DeleteItem
       Resource:
-          - "arn:aws:dynamodb:us-east-1:522673887669:table/llBSS_locations"
+          - "arn:aws:dynamodb:us-east-1:522673887669:table/llBSS_pins"
           - "arn:aws:dynamodb:us-east-1:522673887669:table/llBSS_categories"
 
 # you can overwrite defaults here
