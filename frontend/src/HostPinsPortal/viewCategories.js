@@ -28,10 +28,11 @@ export default class viewCategories extends Component {
     }
 
     const idToken = await firebase.auth().currentUser?.getIdToken()
+    const uuid = firebase.auth().currentUser.email
     const response = await fetch(backendUrl + "yourPins/categories", {
       headers: {
         'Authorization': idToken,
-        'uuid': firebase.auth().currentUser.email
+        'uuid': uuid
       }
     })
 
