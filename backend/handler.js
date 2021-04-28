@@ -67,7 +67,7 @@ module.exports.viewPins = async (event) => {
       }
     }
 
-    const locations = await getLocations(event.headers['uuid'])
+    const locations = await getLocations("sachiangle@gmail.com")
     return {
       statusCode: 200,
       headers,
@@ -136,7 +136,7 @@ module.exports.viewCategories = async (event) => {
       }
     }
     
-    const categories = await getCategories(event.headers['uuid'])
+    const categories = await getCategories("sachiangle@gmail.com")
     return {
       statusCode: 200,
       headers,
