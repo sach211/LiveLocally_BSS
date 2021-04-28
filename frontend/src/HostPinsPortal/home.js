@@ -32,8 +32,8 @@ export default class Home extends Component {
                 New
               </p>
               <ul class="menu-list">
-                <li><a>Location</a></li>
-                <li><a>Category</a></li>
+                <li><a onClick={() => history.push('/yourPins/addPin')}>Location</a></li>
+                <li><a onClick={() => history.push('/yourPins/addCategory')}>Category</a></li>
               </ul>
               <p class="menu-label">
                 View

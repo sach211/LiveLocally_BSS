@@ -5,6 +5,7 @@ const { v4: uuidv4 } = require("uuid");
 const docClient = new AWS.DynamoDB.DocumentClient({ region: "us-east-1" });
 
 const firebaseTokenVerifier = require('firebase-token-verifier')
+
 const projectId = "ll-auth-61b58"
 
 const headers = {

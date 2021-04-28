@@ -1,10 +1,10 @@
 import './../App.css';
+import pinImg from './../images/pinImg.png';
 import history from "./../history";
 import React, { Component } from 'react';
-import pinImg from './../images/pinImg.png';
 import firebase from 'firebase';
 
-export default class viewCategories extends Component {
+export default class addCategory extends Component {
   burgerTransform() {
     var navActive = document.getElementById("menu");
     
@@ -14,13 +14,10 @@ export default class viewCategories extends Component {
     else {
       navActive.style.visibility = "visible";
     }
+
   }
 
-  state = {
-      categories: null
-  }
-
-  async componentDidMount() {
+  async newCategory(){
     let backendUrl = "https://45qc94uz85.execute-api.us-east-1.amazonaws.com/dev/"
 
     if (window.location.href.includes('localhost')) {
@@ -28,21 +25,31 @@ export default class viewCategories extends Component {
     }
 
     const idToken = await firebase.auth().currentUser?.getIdToken()
-    const response = await fetch(backendUrl + "yourPins/categories", {
-      headers: {
-        'Authorization': idToken
-      }
-    })
+
+    let categoryName = document.getElementById("categoryName").value
+
+    const response = await fetch(backendUrl + "/yourPins/addCategory", {
+        method: 'POST',
+        headers: {
+            'Authorization': idToken
+        },
+        body: JSON.stringify({
+            category_id: 3,
+            uu_id: firebase.auth().currentUser.email,
+            category_name: categoryName
+        })
+    }).then(response => response.json())
+    
+    console.log("POST")
 
     if (response.status === 401) {
-      return console.log('unauthorized')
+        return console.log("Unauthorized")
+    }else if (response.status === 400) {
+        return console.log(response.body.message)
     }
-    
-    const categories = await response.json()
-    // save it to your components state so you can use it during render
-    this.setState({categories: categories})
-    console.log(categories)
-  }
+
+    history.push('/yourPins/categories')
+}
 
   render() {
     return (
@@ -73,8 +80,7 @@ export default class viewCategories extends Component {
               </ul>
             </aside>
           </div>
-          <div class="card">
-            <div class="card-content">
+          <div class="card-content">
                 <div class="media">
                     <div class="media-left">
                         <figure class="image is-48x48">
@@ -82,23 +88,26 @@ export default class viewCategories extends Component {
                         </figure>
                     </div>
                     <div class="media-content">
-                        <p class="title is-4">Your Categories</p>
+                        <p class="title is-4">Add Category</p>
                     </div>
                 </div>
                 <div class="content">
-                {
-                    this.state.categories && this.state.categories.map(categories => {
-                    return (
-                        <li>
-                        <div>{categories.category_name}</div>
-                        <div>Followers: {categories.followers}</div>
-                        </li>
-                    )
-                    })
-                }
+                    <div class="field">
+                        <label class="label">Category Name</label>
+                        <div class="control">
+                            <input id="categoryName" class="input" type="text" placeholder="Text input"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-link" onClick={() => this.newCategory()}>Submit</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link is-light" onClick={() => history.push('/yourPins/categories')}>Cancel</button>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
       </div>
     );
