@@ -55,9 +55,11 @@ module.exports.viewPins = async (event) => {
       }
     }
 
+    let email = ""
     try {
       // validate the token from the request
       const decoded = await firebaseTokenVerifier.validate(token, projectId)
+      email = decoded['email']
     } catch (err) {
       // the token was invalid,
       console.error(err)
@@ -67,7 +69,7 @@ module.exports.viewPins = async (event) => {
       }
     }
 
-    const locations = await getLocations(decoded['email'])
+    const locations = await getLocations(email)
     return {
       statusCode: 200,
       headers,
@@ -124,9 +126,11 @@ module.exports.viewCategories = async (event) => {
       }
     }
 
+    let email = ""
     try {
       // validate the token from the request
       const decoded = await firebaseTokenVerifier.validate(token, projectId)
+      email = decoded['email']
     } catch (err) {
       // the token was invalid,
       console.error(err)
@@ -136,7 +140,7 @@ module.exports.viewCategories = async (event) => {
       }
     }
     
-    const categories = await getCategories(decoded['email'])
+    const categories = await getCategories(email)
     return {
       statusCode: 200,
       headers,
