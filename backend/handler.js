@@ -47,7 +47,7 @@ module.exports.viewPins = async (event) => {
   }
 
   if (event.path === '/yourPins/pinsList' && event.httpMethod === 'GET') {
-    const token = event.headers['Authorization']
+    const token = event.headers['Authorization'] 
     if (!token) {
       return {
         headers,
@@ -67,7 +67,7 @@ module.exports.viewPins = async (event) => {
       }
     }
 
-    const locations = await getLocations("sachiangle@gmail.com")
+    const locations = await getLocations(decoded['email'])
     return {
       statusCode: 200,
       headers,
@@ -136,7 +136,7 @@ module.exports.viewCategories = async (event) => {
       }
     }
     
-    const categories = await getCategories("sachiangle@gmail.com")
+    const categories = await getCategories(decoded['email'])
     return {
       statusCode: 200,
       headers,
